@@ -6,12 +6,12 @@ layout: doc
 
 ## 功能总览
 
-`格子表单/GRID-FORM`包含以下模块：
+`MpChart 图表库`包含以下图表：
 
 包名|说明|版本
 -|-|-
-@grid-form/common|通用工具（内置组件）|![common](https://img.shields.io/npm/v/%40grid-form%2Fcommon)
-@grid-form/designer|可视化表单设计器（基于 Naive UI）|![designer](https://img.shields.io/npm/v/%40grid-form%2Fdesigner)
+LineChart|线形图（包括折线图和曲线图）|![common](https://img.shields.io/npm/v/%40grid-form%2Fcommon)
+BarChart|柱状图（包括竖向柱状图和横向柱状图）|![designer](https://img.shields.io/npm/v/%40grid-form%2Fdesigner)
 @grid-form/render-naive|基于[Naive UI](https://www.naiveui.com)实现的渲染器|![render-naive](https://img.shields.io/npm/v/%40grid-form%2Frender-naive?color=5fbc21)
 @grid-form/render-element|基于[Element Plus](https://element-plus.org/zh-CN/)实现的渲染器|![render-element](https://img.shields.io/npm/v/%40grid-form%2Frender-element?color=49a2fe)
 @grid-form/render-vant|基于[Vant4](https://vant-ui.github.io)实现的渲染器（适配移动端）|![render-vant](https://img.shields.io/npm/v/%40grid-form%2Frender-vant?color=36d7b7)

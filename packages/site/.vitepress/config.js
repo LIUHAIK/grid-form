@@ -27,7 +27,7 @@ if(isProd){
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     base,
-    title: "格子表单/GRID-FORM",
+    title: "MpChart 图表库",
     description: "基于 GRID 布局的简单表单工具（包含可视化设计器、渲染器）",
     lastUpdated: false,
     cleanUrls: true,            // Github Pages 支持简洁 URL
@@ -81,14 +81,11 @@ export default defineConfig({
             label: '文档目录'
         },
         footer: {
-            message: '基于<a href="https://github.com/0604hx/grid-form/LICENSE"> MIT</a> 许可发布',
-            copyright: '版权所有 © 2023-至今 <a href="https://github.com/0604hx">0604hx/集成显卡</a>'
+            message: '基于 Apache License 2.0 许可发布',
+            copyright: '版权所有 '
         },
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/0604hx/grid-form' },
-            { icon: {svg: giteeSvg }, link:"https://gitee.com/0604hx/grid-form"},
-            { icon: 'npm', link: 'https://www.npmjs.com/~0604hx' },
-            { icon:{ svg: csdnSvg }, link:"https://blog.csdn.net/ssrc0604hx?type=blog" }
+            { icon: 'gitee', link: 'https://gitee.com/openharmony-tpc/ohos_mpchart' },
         ],
         lastUpdated : true
         // lastUpdated: {

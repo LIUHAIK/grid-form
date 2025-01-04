@@ -3,21 +3,21 @@
 layout: home
 
 hero:
-  name: "格子表单/GRID-FORM"
-  tagline: 基于 GRID 布局的 VUE3 表单工具<br>包含可视化设计器、渲染器（多UI库）
+  name: "MpChart 图表库"
+  tagline: MpChart是一个包含各种类型图表的图表库，方便开发者快速实现图表UI，主要包括线形图、柱状图、饼状图、蜡烛图、气泡图、雷达图、瀑布图等自定义图表库。
   actions:
     - theme: brand
       text: 快速开始
       link: /guide/getting-started
     - theme: alt
-      text: 在线可视化设计器
+      text: 在线文档
       link: /demo/designer
     - theme: alt
-      text: 博客专栏
-      link: https://blog.csdn.net/ssrc0604hx/category_12570844.html
+      text: 官方网站
+      link: https://gitee.com/openharmony-tpc/ohos_mpchart
   image:
-      src: /designer.webp
-      alt: GRID-FORM
+      src: /mpchartDemo.png
+      alt: MpChart
 
 features:
   - title: 可视化设计器
