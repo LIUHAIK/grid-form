@@ -8,103 +8,91 @@ layout: doc
 
 `MpChart 图表库`包含以下图表：
 
-包名|说明|版本
+包名|说明|示意图
 -|-|-
-LineChart|线形图（包括折线图和曲线图）|![common](https://img.shields.io/npm/v/%40grid-form%2Fcommon)
-BarChart|柱状图（包括竖向柱状图和横向柱状图）|![designer](https://img.shields.io/npm/v/%40grid-form%2Fdesigner)
-@grid-form/render-naive|基于[Naive UI](https://www.naiveui.com)实现的渲染器|![render-naive](https://img.shields.io/npm/v/%40grid-form%2Frender-naive?color=5fbc21)
-@grid-form/render-element|基于[Element Plus](https://element-plus.org/zh-CN/)实现的渲染器|![render-element](https://img.shields.io/npm/v/%40grid-form%2Frender-element?color=49a2fe)
-@grid-form/render-vant|基于[Vant4](https://vant-ui.github.io)实现的渲染器（适配移动端）|![render-vant](https://img.shields.io/npm/v/%40grid-form%2Frender-vant?color=36d7b7)
-@grid-form/render-varlet|基于[varlet](https://github.com/varletjs/varlet)实现的渲染器|![render-vant](https://img.shields.io/npm/v/%40grid-form%2Frender-varlet?color=6750a4)
+LineChart|线形图（包括折线图和曲线图）|![Line Chart](images/lineChart.png)
+BarChart|柱状图（包括竖向柱状图和横向柱状图）|![Bar Chart](images/barChart.png)
+PieChart|饼状图|![Pie Chart](images/pieChart.png)
+BubbleChart|气泡图|![Bubble Chart](images/bubbleChart.png)
+CandleStickChart|蜡烛图|![Candle Stick Chart](images/candlestickChart.png)
+CombinedChart|组合图|![Combined Chart](images/combinedChart.png)
+RadarChart|雷达图|![Radar Chart](images/radarChart.png)
+ScatterChart|散点图|![Scatter Chart](images/scatterChart.png)
+WaterfallChart|瀑布图|![Waterfall Chart](images/waterfallChart.png)
 
 :::tip 提示
-设计器与渲染器可单独使用，按需引入包即可😄
+基本图表类型涵盖了上述内容，而更多样式则可以通过调整设置参数来改变，您可以通过运行程序来查看这些多样化的样式。😄
 :::
 
-## 渲染器简单示例
-> 此处使用 `render-naive`，其他渲染器类似
+## 线形图简单示例
+> 在终端输入以下命令，下载安装ohos/mpchart
 
+> OpenHarmony ohpm环境配置等更多内容，请参考 [如何安装OpenHarmony ohpm包 。](https://gitee.com/openharmony-tpc/docs/blob/master/OpenHarmony_har_usage.md)
 ::: code-group
-```sh [npm]
-$ npm i @grid-form/render-naive
-```
-
-```sh [pnpm]
-$ pnpm add @grid-form/render-naive
-```
-
-```sh [yarn]
-$ yarn add @grid-form/render-naive
+```sh [ohpm]
+ohpm i @ohos/mpchart
 ```
 :::
 
-接着，我们可以在页面引入渲染器并使用它。
+> 以线形图为例，具体代码如下
 
-<script setup>
-import RenderSimple from '../components/RenderSimple.vue'
+```typescript
+import {
+  JArrayList,
+  EntryOhos,
+  ILineDataSet,
+  LineData,
+  LineChart,
+  LineChartModel,
+  Mode,
+  LineDataSet,
+  XAxisPosition,
+} from '@ohos/mpchart';
 
-const demoFormBean = `({
-        "size":"medium",            //表单尺寸
-        "width":"100%",             //表单整体宽度
-        "grid":3,                   //每行的列数
-        "labelWidth":120,           //标签宽度
-        "labelPlacement":"top",     //标签位置，可选：top（默认）、left
-        items:[
-            { _widget:"INPUT", _uuid:"name", _text:"您的姓名", _required:true },
-            { _widget:"INPUT", _uuid:"origin", _text:"籍贯" },
-            { _widget:"NUMBER", _uuid:"age", _text:"年龄", suffix:"岁" }
-        ]
-    })`
-const form = eval(demoFormBean)
-</script>
+@Entry
+@Component
+struct Index {
+  private model: LineChartModel = new LineChartModel();
 
-```js-vue
-<template>
-    <FormRender :renders="RenderFuncs" :form="form" debug  @submit="onSubmit" />
-</template>
+  aboutToAppear() {
+    // 创建一个 JArrayList 对象，用于存储 EntryOhos 类型的数据
+    let values: JArrayList<EntryOhos> = new JArrayList<EntryOhos>();
+    // 循环生成 1 到 20 的随机数据，并添加到 values 中
+    for (let i = 1; i <= 20; i++) {
+      values.add(new EntryOhos(i, Math.random() * 100));
+    }
+    // 创建 LineDataSet 对象，使用 values 数据，并设置数据集的名称为 'DataSet'
+    let dataSet = new LineDataSet(values, 'DataSet');
+    dataSet.setMode(Mode.CUBIC_BEZIER);
+    dataSet.setDrawCircles(false);
+    let dataSetList: JArrayList<ILineDataSet> = new JArrayList<ILineDataSet>();
+    dataSetList.add(dataSet);
+    // 创建 LineData 对象，使用 dataSetList数据，并将其传递给model
+    let lineData: LineData = new LineData(dataSetList);
+    this.model?.setData(lineData);
+    this.model.getAxisLeft()?.setAxisLineWidth(2);
+    //设置x轴位置在底部
+    this.model.getXAxis()?.setPosition(XAxisPosition.BOTTOM);
+    //设置右边轴不生效
+    this.model.getAxisRight()?.setEnabled(false);
+    //设置左边轴的线条不显示
+    this.model.getAxisLeft()?.setDrawAxisLine(false);
+    //设置description不显示
+    this.model.getDescription()?.setEnabled(false);
+  }
 
-<script setup>
-    import { FormRender, RenderFuncs } from "@grid-form/render-naive"
-
-    // 如需扩展 RenderFuncs 请自行扩写
-    // 表单对象通常来自后端，详细数据结构请查看 packages/example/src/views/渲染器.vue
-    let form = reactive{{ demoFormBean }}
-
-    const onSubmit = (formData,action)=>console.debug(`表单值：`, action, formData)
-</script>
+  build() {
+    Column() {
+      LineChart({ model: this.model })
+        .width('100%')
+        .height('50%')
+        .backgroundColor(Color.White)
+    }
+  }
+}
 ```
+## 线形图效果
 
-<NaiveWrapper>
-    <RenderSimple :bean="form" />
-</NaiveWrapper>
-
+![Line Chart](images/lineChartDemo.png)
 
 
-## 内置组件 <Badge type="info">18+</Badge>
-> 我们内置了常用的输入、选择、展示组件，并支持扩展自定义组件
-
-<!-- :::details 目前支持的组件 -->
-
-组件名称|说明|Naive UI|Element Plus|Vant4
--|-|-|-|-
-文本输入|支持TEXTAREA|✅|✅|✅
-数值输入|仅限数字|✅|✅|✅
-动态标签|标签组输入（Array）|✅|✅|
-`按钮`|可用于交互操作|✅|✅|✅
-日期选择||✅|✅|✅
-下拉选择（Select）|支持多选|✅|✅|✅
-单选框（Radio）||✅|✅|✅
-开关（Switch）|布尔值|✅|✅|✅
-多选框（Checkbox）||✅|✅|✅
-星级评分（Rate）|数值|✅|✅|✅
-颜色选择器||✅|✅|
-文件上传|按指定格式读取内容|✅|✅|✅
-静态文本|支持HTML|✅|✅|✅
-信息框|标题+正文，支持HTML|✅|✅|✅
-分割线||✅|✅|✅
-`图片展示`||✅|✅|✅
-静态表格|简单的二维数据展示表格|✅|✅|✅
-子容器（Card）|嵌套容器|✅|✅|✅
-
-注意：上述组件`特殊标注`则表示支持自定义脚本
-<!-- ::: -->
